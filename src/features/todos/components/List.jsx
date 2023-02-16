@@ -1,30 +1,30 @@
-import React from "react";
-import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteTodo, toggleStatusTodo } from "../../../redux/modules/todos.js";
-import { Link } from "react-router-dom";
+import React from 'react'
+import styled from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteTodo, toggleStatusTodo } from '../../../redux/modules/todos.js'
+import { Link } from 'react-router-dom'
 
 const List = () => {
-  const dispatch = useDispatch();
-  const todos = useSelector((state) => state.todos.todos);
+  const dispatch = useDispatch()
+  const todos = useSelector((state) => state.todos.todos)
 
   const onDeleteTodo = (id) => {
-    dispatch(deleteTodo(id));
-  };
+    dispatch(deleteTodo(id))
+  }
 
   const onToggleStatusTodo = (id) => {
-    dispatch(toggleStatusTodo(id));
-  };
+    dispatch(toggleStatusTodo(id))
+  }
 
   return (
     <StListContainer>
       <h2>Working.. 🔥</h2>
       <StListWrapper>
-        {todos.map((todo) => {
+        {todos.map((todo, index) => {
           if (!todo.isDone) {
             return (
-              <StTodoContainer key={todo.id}>
-                <StLink to={`/${todo.id}`} key={todo.id}>
+              <StTodoContainer key={index}>
+                <StLink to={`/${todo.id}`} state={todo} key={todo.id}>
                   <div>상세보기</div>
                 </StLink>
                 <div>
@@ -42,13 +42,13 @@ const List = () => {
                     borderColor="green"
                     onClick={() => onToggleStatusTodo(todo.id)}
                   >
-                    {todo.isDone ? "취소!" : "완료!"}
+                    {todo.isDone ? '취소!' : '완료!'}
                   </StButton>
                 </StDialogFooter>
               </StTodoContainer>
-            );
+            )
           } else {
-            return null;
+            return null
           }
         })}
       </StListWrapper>
@@ -57,8 +57,8 @@ const List = () => {
         {todos.map((todo, index) => {
           if (todo.isDone) {
             return (
-              <StTodoContainer key={todo.id}>
-                <StLink to={`/${index}`} key={todo.id}>
+              <StTodoContainer key={index}>
+                <StLink to={`/${todo.id}`} state={todo} key={todo.id}>
                   <div>상세보기</div>
                 </StLink>
                 <div>
@@ -74,33 +74,33 @@ const List = () => {
                   </StButton>
                   <StButton
                     borderColor="green"
-                    onClick={onToggleStatusTodo}
+                    onClick={() => onToggleStatusTodo(todo.id)}
                   >
-                    {todo.isDone ? "취소!" : "완료!"}
+                    {todo.isDone ? '취소!' : '완료!'}
                   </StButton>
                 </StDialogFooter>
               </StTodoContainer>
-            );
+            )
           } else {
-            return null;
+            return null
           }
         })}
       </StListWrapper>
     </StListContainer>
-  );
-};
+  )
+}
 
-export default List;
+export default List
 
 const StListContainer = styled.div`
   padding: 0 24px;
-`;
+`
 
 const StListWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-`;
+`
 
 const StTodoContainer = styled.div`
   width: 270px;
@@ -108,18 +108,18 @@ const StTodoContainer = styled.div`
   min-height: 150px;
   border-radius: 12px;
   padding: 12px 24px 24px 24px;
-`;
+`
 
 const StLink = styled(Link)`
   text-decoration: none;
-`;
+`
 
 const StDialogFooter = styled.footer`
   display: flex;
   justify-content: end;
   padding: 12px;
   gap: 12px;
-`;
+`
 
 const StButton = styled.button`
   border: 1px solid ${({ borderColor }) => borderColor};
@@ -128,4 +128,4 @@ const StButton = styled.button`
   background-color: #fff;
   border-radius: 12px;
   cursor: pointer;
-`;
+`

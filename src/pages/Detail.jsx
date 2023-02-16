@@ -1,40 +1,42 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { getTodoByID } from "../redux/modules/todos.js";
+import React, { useEffect } from 'react'
+import styled from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { getTodoByID } from '../redux/modules/todos.js'
 
 const Detail = () => {
-  const dispatch = useDispatch();
-  const todo = useSelector((state) => state.todos.todo);
+  const dispatch = useDispatch()
+  const todo = useSelector((state) => state.todos.todos)
+  console.log('todo : ', todo)
+  const location = useLocation()
+  let navigate = useNavigate()
 
-  const { id } = useParams();
-  const navigate = useNavigate();
+  const { id } = useParams()
 
   return (
     <StContainer>
       <StDialog>
         <div>
           <StDialogHeader>
-            <div>ID :{todo.id}</div>
+            <div>ID :{location.state.id}</div>
             <StButton
               borderColor="#ddd"
               onClick={() => {
-                navigate("/");
+                navigate('/')
               }}
             >
               이전으로
             </StButton>
           </StDialogHeader>
-          <StTitle>{todo.title}</StTitle>
-          <StBody>{todo.body}</StBody>
+          <StTitle>{location.state.title}</StTitle>
+          <StBody>{location.state.body}</StBody>
         </div>
       </StDialog>
     </StContainer>
-  );
-};
+  )
+}
 
-export default Detail;
+export default Detail
 
 const StContainer = styled.div`
   border: 2px solid #eee;
@@ -43,7 +45,7 @@ const StContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
+`
 
 const StDialog = styled.div`
   width: 600px;
@@ -52,7 +54,7 @@ const StDialog = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-`;
+`
 
 const StDialogHeader = styled.div`
   display: flex;
@@ -60,15 +62,15 @@ const StDialogHeader = styled.div`
   justify-content: space-between;
   padding: 0 24px;
   align-items: center;
-`;
+`
 
 const StTitle = styled.h1`
   padding: 0 24px;
-`;
+`
 
 const StBody = styled.main`
   padding: 0 24px;
-`;
+`
 
 const StButton = styled.button`
   border: 1px solid ${({ borderColor }) => borderColor};
@@ -77,4 +79,4 @@ const StButton = styled.button`
   background-color: #fff;
   border-radius: 12px;
   cursor: pointer;
-`;
+`
